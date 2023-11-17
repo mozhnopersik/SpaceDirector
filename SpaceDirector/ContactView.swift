@@ -8,11 +8,52 @@
 import SwiftUI
 
 struct ContactView: View {
+    @EnvironmentObject private var contactData: ContactData
+    var contact: ContactData.Contact
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Image("BackgroundTwo")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            VStack (alignment: .leading, spacing: 10) {
+                HStack {
+                    RegularText(text: "\(contact.name) \(contact.surname)", color: .white, size: 30)
+                    Spacer()
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        RegularText(text: "назад", color: .white, size: 15)
+                    }
+                }
+                RegularText(text: "Номер телефона: \(contact.number)", color: .white, size: 15)
+                Spacer()
+                HStack {
+                    Spacer()
+                    BarbButtonView(title: "Удалить контакт", action: {
+                        removeContact()
+                        dismiss()
+                    }, width: 147, height: 47)
+                    Spacer()
+                }
+                .padding(.bottom, 60)
+                
+            }
+            .padding(.horizontal, 31)
+            .padding(.top, 80)
+        }
+        .toolbar(.hidden)
+    }
+    private func removeContact() {
+        if let index = contactData.contacts.firstIndex(of: contact) {
+            contactData.contacts.remove(at: index)
+        }
     }
 }
 
 #Preview {
-    ContactView()
+    ContactView(contact: ContactData.Contact(name: "John", surname: "Karter", number: "89610568807"))
+        .environmentObject(ContactData())
 }

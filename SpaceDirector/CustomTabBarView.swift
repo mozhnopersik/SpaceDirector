@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct CustomTabBarView: View {
+    @State private var tabSelection = 1
+    @Binding var nameOfContact: String
+    @Binding var newContactIsPresented: Bool
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView(selection: $tabSelection) {
+                
+            ContactsView().tag(1)
+            Text("Tab Content 2").tag(2)
+        }
+        .overlay(alignment: .bottom) {
+            TabBarView(tabSelection: $tabSelection)
+        }
     }
 }
 
-#Preview {
-    CustomTabBarView()
-}
+//#Preview {
+//    CustomTabBarView(nameOfContact: .constant("Tim Cook"), newContactIsPresented: .constant(false))
+//}

@@ -8,21 +8,22 @@
 import SwiftUI
 
 struct MyDataEditingView: View {
-    @State private var name: String
-    @State private var age: String
-    @State private var experience: String
-    @State private var post: String
+    @State private var myName: String = UserManager.shared.currentUser.name
+    @State private var myAge: String = UserManager.shared.currentUser.age
+    @State private var myExperience: String = UserManager.shared.currentUser.experience
+    @State private var myPost: String = UserManager.shared.currentUser.post
+    @State private var photoIsToggleOn: Bool = UserManager.shared.currentUser.photoIsToggleOn
+
+    @Binding var myDataEditingIsPresented: Bool
+
     
-    @State private var isToggleOn: Bool
-    @Binding var newContactIsPresented: Bool
-    
-    public init(name: String, age: String, experience: String, post: String, isToggleOn: Bool, newContactIsPresented: Binding<Bool>) {
-        self._name = State(initialValue: "name")
-        self._age = State(initialValue: "age")
-        self._experience = State(initialValue: "experience")
-        self._post = State(initialValue: "post")
-        self._isToggleOn = State(initialValue: true)
-        self._newContactIsPresented = newContactIsPresented
+    init(myName: String, myAge: String, myExperience: String, myPost: String, photoIsToggleOn: Bool, myDataEditingIsPresented: Binding<Bool>) {
+        self._myName = State(initialValue: myName)
+        self._myAge = State(initialValue: myAge)
+        self._myExperience = State(initialValue: myExperience)
+        self._myPost = State(initialValue: myPost)
+        self._photoIsToggleOn = State(initialValue: photoIsToggleOn)
+        self._myDataEditingIsPresented = myDataEditingIsPresented
     }
     
     var body: some View {
@@ -32,31 +33,35 @@ struct MyDataEditingView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             VStack (alignment: .leading) {
-                RegularTextView(text: "Тут можно изменить данные", color: .white, size: 25)
+                RegularText(text: "Тут можно изменить данные", color: .white, size: 25)
                     .padding(.bottom, 20)
                     .padding(.trailing, 30)
                 
-                RegularTextView(text: "Ваше имя:", color: .white, size: 15)
-                TextFieldView(state: $name, placeholder: "")
+                RegularText(text: "Ваше имя:", color: .white, size: 15)
+                WhiteTextField(text: $myName, placeholder: "")
                     .padding(.bottom, 10)
-                RegularTextView(text: "Ваш возраст:", color: .white, size: 15)
-                TextFieldView(state: $age, placeholder: "")
+                RegularText(text: "Ваш возраст:", color: .white, size: 15)
+                WhiteTextField(text: $myAge, placeholder: "")
                     .padding(.bottom, 10)
                 
-                RegularTextView(text: "Ваш стаж:", color: .white, size: 15)
-                TextFieldView(state: $name, placeholder: "")
+                RegularText(text: "Ваш стаж:", color: .white, size: 15)
+                WhiteTextField(text: $myExperience, placeholder: "")
                     .padding(.bottom, 10)
-                RegularTextView(text: "Ваша должность:", color: .white, size: 15)
-                TextFieldView(state: $age, placeholder: "")
+                RegularText(text: "Ваша должность:", color: .white, size: 15)
+                WhiteTextField(text: $myPost, placeholder: "")
                     .padding(.bottom, 10)
-                Toggle(isOn: $isToggleOn, label: {
-                    RegularTextView(text: "А тут можно сменить фото на мужское (пока так)", color: .white, size: 15)
+                Toggle(isOn: $photoIsToggleOn, label: {
+                    RegularText(text: "А тут скоро можно будет сменить фото на мужское (пока так)", color: .white, size: 15)
                 })
                 
                 Spacer()
                 HStack {
                     Spacer()
-                    BarbButtonView(title: "Сохранить", action: { newContactIsPresented.toggle() }, width: 147, height: 47)
+                    BarbButtonView(title: "Сохранить", action: {
+                        UserManager.shared.updateCurrentUser(name: myName, age: myAge, experience: myExperience, post: myPost)
+                        print(UserManager.shared.currentUser.name)
+                        myDataEditingIsPresented.toggle()
+                    }, width: 147, height: 47)
                     Spacer()
                 }
                 .padding(.bottom, 60)
@@ -67,7 +72,7 @@ struct MyDataEditingView: View {
         }
     }
 }
-//
-//#Preview {
-//    NewContactView(email: "sakuraiswinx@mail.ru", password: "123")
-//}
+
+#Preview {
+    MyDataEditingView(myName: "", myAge: "", myExperience: "", myPost: "", photoIsToggleOn: true, myDataEditingIsPresented: .constant(true))
+}

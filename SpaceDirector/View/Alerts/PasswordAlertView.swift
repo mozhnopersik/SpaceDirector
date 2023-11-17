@@ -18,9 +18,9 @@ struct PasswordAlertView: View {
             RoundedRectangle(cornerRadius: 22.0)
                 .frame(width: 290, height: 140)
                 .foregroundColor(.white)
-            HorizontalLineView(width: 290)
+            HorizontalLine(width: 290)
                 .padding(.top, 60)
-            VerticalLineView(height: 40)
+            VerticalLine(height: 40)
                 .padding(.top, 100)
                 .padding(.trailing, 7)
             VStack (spacing: 23) {
@@ -39,13 +39,11 @@ struct PasswordAlertView: View {
                         RegularText(text: "Вставить", color: Color("Barb"), size: 15)
                     }
                     
-                    
                     Button(action: {
                         isPresentingPasswordAlert.toggle()
                     }) {
                         RegularText(text: "Не нужно", color: Color("Barb"), size: 15)
                     }
-                    
                 }
             }
         }

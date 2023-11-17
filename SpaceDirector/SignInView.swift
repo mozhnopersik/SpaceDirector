@@ -8,11 +8,155 @@
 import SwiftUI
 
 struct SignInView: View {
+
+    @State private var isPresentingWhereAlert = false
+    @State private var isPresentingLoginAlert = false
+    @State private var isPresentingPasswordAlert = false
+    
+    @State private var password: String
+    @State private var email: String
+    
+    @Binding var signInIsPresented: Bool
+    
+    init(email: String, password: String, signInIsPresented: Binding<Bool>) {
+        self._email = State(initialValue: email)
+        self._password = State(initialValue: password)
+        self._signInIsPresented = signInIsPresented
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            ZStack {
+                Image("BackgroundTwo")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+                VStack (alignment: .leading) {
+                    RegularText(text: "Введите ваши данные", color: .white, size: 25)
+                    BarbButtonView(title: "Где мне их взять? ", action: {self.isPresentingWhereAlert.toggle()}, width: 147, height: 36)
+                        .padding(.bottom, 10)
+                    RegularText(text: "Логин:", color: .white, size: 15)
+                    WhiteTextField(text: $email, placeholder: "")
+                        .disableAutocorrection(true)
+                        .padding(.bottom, 10)
+                    RegularText(text: "Пароль:", color: .white, size: 15)
+                    PasswordTextField(text: $password, placeholder: "")
+                        .disableAutocorrection(true)
+                        .padding(.bottom, 10)
+                    HStack {
+                        Button(action: {
+                            self.isPresentingLoginAlert.toggle()
+                        }) {
+                            RegularText(text: "Забыли логин?", color: .white, size: 15)
+                        }
+                        Spacer()
+                        Button(action: {
+                            isPresentingPasswordAlert.toggle()
+                        }) {
+                            RegularText(text: "Забыли пароль?", color: .white, size: 15)
+                        }
+                        
+                        
+                    }
+                    .padding(.bottom, 10)
+                    HStack {
+                        Spacer()
+                        SignInButton(password: $password, email: $email)
+                        Spacer()
+                    }
+                    Spacer()
+                }
+                .padding(.horizontal, 35)
+                .padding(.top, 100)
+                
+                if isPresentingWhereAlert {
+                    VStack {
+                        Spacer()
+                        WhereIsDataAlertView(isPresentingWhereAlert: $isPresentingWhereAlert, action: {print("")})
+                        
+                        Spacer()
+                    }
+                    .background(
+                        Color.black.opacity(0.3)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                withAnimation {
+                                    self.isPresentingWhereAlert.toggle()
+                                }
+                            })
+                    .transition(.opacity.animation(.easeIn(duration: 0.2)))
+                }
+                
+                if isPresentingLoginAlert {
+                    VStack {
+                        Spacer()
+                        LoginAlertView(isPresentingLoginAlert: $isPresentingLoginAlert, email: $email, action: {print("")})
+                        
+                        Spacer()
+                    }
+                    .background(
+                        Color.black.opacity(0.3)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                withAnimation {
+                                    self.isPresentingLoginAlert.toggle()
+                                }
+                            })
+                    .transition(.opacity.animation(.easeIn(duration: 0.2)))
+                }
+                if isPresentingPasswordAlert {
+                    VStack {
+                        Spacer()
+                        PasswordAlertView(isPresentingPasswordAlert: $isPresentingPasswordAlert, password: $password, action: {self.isPresentingPasswordAlert.toggle()})
+                        
+                        Spacer()
+                    }
+                    .background(
+                        Color.black.opacity(0.3)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                withAnimation {
+                                    self.isPresentingPasswordAlert.toggle()
+                                }
+                            })
+                    .transition(.opacity.animation(.easeIn(duration: 0.2)))
+                }
+                
+            }
+            .onAppear {
+                withAnimation {
+                    isPresentingWhereAlert = false
+                }
+            }
+        }
+        .onTapGesture {
+            UIApplication.shared.endEditing()
+        }
     }
 }
 
+struct SignInButton: View {
+    
+    @Binding var password: String
+    @Binding var email: String
+    let user = UserManager.shared.currentUser
+    
+    var body: some View {
+        if password == user.password && email == user.email {
+            NavigationLink(destination: YeyView()) {
+                RegularText(text: "Войти", color: .white, size: 25)
+            }
+        } else {
+            Button(action: {
+                print("Неверные данные")
+            }){
+                RegularText(text: "Войти", color: .white, size: 25)
+            }
+        }
+    }
+}
+
+
 #Preview {
-    SignInView()
+    SignInView(email: "", password: "", signInIsPresented: .constant(true))
 }

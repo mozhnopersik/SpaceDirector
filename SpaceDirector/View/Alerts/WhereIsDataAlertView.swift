@@ -16,7 +16,7 @@ struct WhereIsDataAlertView: View {
             RoundedRectangle(cornerRadius: 22.0)
                 .frame(width: 290, height: 140)
                 .foregroundColor(.white)
-            HorizontalLineView(width: 290)
+            HorizontalLine(width: 290)
                 .padding(.top, 60)
             VStack (spacing: 23) {
                 VStack (spacing: 3) {
@@ -36,15 +36,6 @@ struct WhereIsDataAlertView: View {
             
         }
         .background(Color.clear)
-    }
-}
-
-struct HorizontalLineView: View {
-    var width: CGFloat
-    var body: some View {
-        Rectangle()
-            .frame(width: width, height: 0.6)
-            .foregroundColor(Color("Barb"))
     }
 }
 

@@ -9,9 +9,18 @@ import SwiftUI
 
 @main
 struct SpaceDirectorApp: App {
+    @AppStorage("isUserAuthenticated") var isUserAuthenticated = false
+    @StateObject private var contactData = ContactData()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if isUserAuthenticated {
+                HomeView(viewModel: NASAViewModel())
+                    .environmentObject(ContactData())
+            } else {
+               HelloView()
+                    .environmentObject(ContactData())
+            }
         }
     }
 }

@@ -15,10 +15,9 @@ struct RegularText: View {
         Text(text)
             .font(.custom("TildaSans-Regular", size: size))
             .foregroundStyle(Color(color))
-            
     }
 }
 
 #Preview {
-    RegularText(text: "", color: .black, size: 15)
+    RegularText(text: "Hey :)", color: .black, size: 15)
 }

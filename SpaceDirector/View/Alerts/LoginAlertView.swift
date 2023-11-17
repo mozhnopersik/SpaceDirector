@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginAlertView: View {
+    
     @Binding var isPresentingLoginAlert: Bool
     @Binding var email: String
 
@@ -17,9 +18,9 @@ struct LoginAlertView: View {
             RoundedRectangle(cornerRadius: 22.0)
                 .frame(width: 290, height: 140)
                 .foregroundColor(.white)
-            HorizontalLineView(width: 290)
+            HorizontalLine(width: 290)
                 .padding(.top, 60)
-            VerticalLineView(height: 40)
+            VerticalLine(height: 40)
                 .padding(.top, 100)
                 .padding(.trailing, 7)
             VStack (spacing: 23) {
@@ -49,14 +50,7 @@ struct LoginAlertView: View {
         .background(Color.clear)
     }
 }
-struct VerticalLineView: View {
-    var height: CGFloat
-    var body: some View {
-        Rectangle()
-            .frame(width: 0.6, height: height)
-            .foregroundColor(Color("Barb"))
-    }
-}
+
 #Preview {
     LoginAlertView(isPresentingLoginAlert: .constant(true), email: .constant(""), action: {print("")})
 }

@@ -8,11 +8,29 @@
 import SwiftUI
 
 struct ContactCellView: View {
+    @EnvironmentObject private var contactData: ContactData
+    var name: String
+    var surname: String
+    var width: CGFloat
+    var contact: ContactData.Contact
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationLink(destination: ContactView(contact: contact)) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 25.0)
+                        .foregroundColor(.white)
+                        .frame(width: width, height: 53)
+                        .padding(0)
+                    HStack {
+                        RegularText(text: "\(name) \(surname)", color: Color("Barb"), size: 15)
+                            .padding(.leading, 35)
+                        Spacer()
+                    }
+                }
+        }
     }
 }
 
 #Preview {
-    ContactCellView()
+    ContactCellView(name: "Тим Кук", surname: "", width: 330, contact: ContactData.Contact(name: "", surname: "", number: ""))
 }

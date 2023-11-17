@@ -8,11 +8,31 @@
 import SwiftUI
 
 struct HomeView: View {
+    @ObservedObject var viewModel: NASAViewModel
+    @State private var tabSelection = 1
+    
+    @EnvironmentObject private var сontactData: ContactData
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            TabView(selection: $tabSelection) {
+                
+                ProfileView().tag(1)
+                ContactsView().tag(2)
+                SpaceView(titleOfPhoto: "", viewModel: viewModel).tag(3)
+                SettingsView().tag(4)
+            }
+            .overlay(alignment: .bottom) {
+                TabBarView(tabSelection: $tabSelection)
+            }
+        }
+        .onAppear {
+            viewModel.fetchAPOD()
+        }
     }
 }
 
 #Preview {
-    HomeView()
+    HomeView(viewModel: NASAViewModel())
+        .environmentObject(ContactData())
 }

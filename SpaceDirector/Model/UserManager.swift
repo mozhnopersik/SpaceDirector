@@ -10,31 +10,38 @@ import Foundation
 class UserManager: ObservableObject {
     
     static let shared = UserManager()
-
+    
     private let userDefaults = UserDefaults.standard
     private let userKey = "UserKey"
-
-    var currentUser: UserProfile {
-        get {
-            if let savedData = userDefaults.object(forKey: userKey) as? Data,
-               let decodedUser = try? JSONDecoder().decode(UserProfile.self, from: savedData) {
-                return decodedUser
-            } else {
-                return UserProfile(name: "", age: "25", experience: "6", post: "Астрофизик", photoIsToggleOn: true, email: "thebest@email.com", password: "12345678")
-            }
-        }
-        set {
-            if let encodedData = try? JSONEncoder().encode(newValue) {
-                userDefaults.set(encodedData, forKey: userKey)
-            }
+    
+    @Published var currentUser: UserProfile {
+        didSet {
+            objectWillChange.send()
         }
     }
+    
+    init() {
+        if let savedData = userDefaults.object(forKey: userKey) as? Data,
+           let decodedUser = try? JSONDecoder().decode(UserProfile.self, from: savedData) {
+            self.currentUser = decodedUser
+        } else {
+            self.currentUser = UserProfile(name: "", age: "25", experience: "6", post: "Астрофизик", photoIsToggleOn: true, email: "thebest@email.com", password: "12345678")
+        }
+    }
+    
     func updateCurrentUser(name: String, age: String, experience: String, post: String) {
         currentUser.name = name
         currentUser.age = age
         currentUser.experience = experience
         currentUser.post = post
+        saveCurrentUser()
+    }
+    
+    private func saveCurrentUser() {
+        if let encodedData = try? JSONEncoder().encode(currentUser) {
+            userDefaults.set(encodedData, forKey: userKey)
         }
+    }
 }
 
 struct UserProfile: Codable {
