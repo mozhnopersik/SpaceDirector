@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContactsView: View {
+struct ContactListView: View {
     
     @EnvironmentObject private var contactData: ContactData
     @State private var newContactIsPresented = false
@@ -24,23 +24,16 @@ struct ContactsView: View {
                 GeometryReader { geometry in
                     VStack {
                         List {
-                            ContactCellView(name: "Тим", surname: "Кук", width: geometry.size.width - 22, contact: ContactData.Contact(name: "", surname: "", number: ""))
-                                .listRowBackground(Color.clear)
-                                .listRowSeparator(.hidden)
-                            ContactCellView(name: "Тим", surname: "Кук", width: geometry.size.width - 22, contact: ContactData.Contact(name: "", surname: "", number: ""))
-                                .listRowBackground(Color.clear)
-                                .listRowSeparator(.hidden)
                             ForEach(contactData.contacts, id: \.self) { contact in
                                 ContactCellView(name: contact.name, surname: contact.surname, width: geometry.size.width - 22, contact: contact)
                                     .listRowBackground(Color.clear)
                                     .listRowSeparator(.hidden)
-                                    
                             }
                         }
                         .listStyle(PlainListStyle())
                         .foregroundColor(.clear)
                         Spacer()
-                        BarbButtonView(title: "Добавить новый контакт", action: {
+                        BarbButton(title: "Добавить новый контакт", action: {
                             newContactIsPresented.toggle()
                             print(newContactIsPresented)
                         }, width: 240, height: 47)
@@ -60,6 +53,6 @@ struct ContactsView: View {
 
 
 #Preview {
-    ContactsView()
+    ContactListView()
         .environmentObject(ContactData())
 }

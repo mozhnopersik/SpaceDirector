@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-struct ButtonsView: View {
+struct Buttons: View {
     var body: some View {
-        BarbButtonView(title: "Давай", action: {print("")}, width: 132, height: 47)
+        Text("Place a View here to view it :)")
     }
 }
-struct BarbButtonView: View {
+
+struct BarbButton: View {
     var title: String
     var action: () -> Void
     var width: CGFloat
@@ -20,7 +21,6 @@ struct BarbButtonView: View {
     
     var body: some View {
         Button(action: action) {
-            
             RoundedRectangle(cornerRadius: 27)
                 .foregroundColor(Color("Barb"))
                 .frame(width: width, height: height)
@@ -33,7 +33,7 @@ struct BarbButtonView: View {
     }
 }
 
-struct BarbRoudedRectangle: View {
+struct BarbRoudedButton: View {
     var title: String
     var width: CGFloat
     var height: CGFloat
@@ -53,5 +53,5 @@ struct BarbRoudedRectangle: View {
 }
 
 #Preview {
-    ButtonsView()
+    Buttons()
 }

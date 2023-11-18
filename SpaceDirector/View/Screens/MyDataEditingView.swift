@@ -8,23 +8,9 @@
 import SwiftUI
 
 struct MyDataEditingView: View {
-    @State private var myName: String = UserManager.shared.currentUser.name
-    @State private var myAge: String = UserManager.shared.currentUser.age
-    @State private var myExperience: String = UserManager.shared.currentUser.experience
-    @State private var myPost: String = UserManager.shared.currentUser.post
-    @State private var photoIsToggleOn: Bool = UserManager.shared.currentUser.photoIsToggleOn
+    @ObservedObject var viewModel: MyDataEditingViewModel
 
     @Binding var myDataEditingIsPresented: Bool
-
-    
-    init(myName: String, myAge: String, myExperience: String, myPost: String, photoIsToggleOn: Bool, myDataEditingIsPresented: Binding<Bool>) {
-        self._myName = State(initialValue: myName)
-        self._myAge = State(initialValue: myAge)
-        self._myExperience = State(initialValue: myExperience)
-        self._myPost = State(initialValue: myPost)
-        self._photoIsToggleOn = State(initialValue: photoIsToggleOn)
-        self._myDataEditingIsPresented = myDataEditingIsPresented
-    }
     
     var body: some View {
         ZStack {
@@ -38,28 +24,28 @@ struct MyDataEditingView: View {
                     .padding(.trailing, 30)
                 
                 RegularText(text: "Ваше имя:", color: .white, size: 15)
-                WhiteTextField(text: $myName, placeholder: "")
+                WhiteTextField(text: $viewModel.myName, placeholder: "")
                     .padding(.bottom, 10)
                 RegularText(text: "Ваш возраст:", color: .white, size: 15)
-                WhiteTextField(text: $myAge, placeholder: "")
+                WhiteTextField(text: $viewModel.myAge, placeholder: "")
                     .padding(.bottom, 10)
                 
                 RegularText(text: "Ваш стаж:", color: .white, size: 15)
-                WhiteTextField(text: $myExperience, placeholder: "")
+                WhiteTextField(text: $viewModel.myExperience, placeholder: "")
                     .padding(.bottom, 10)
                 RegularText(text: "Ваша должность:", color: .white, size: 15)
-                WhiteTextField(text: $myPost, placeholder: "")
+                WhiteTextField(text: $viewModel.myPost, placeholder: "")
                     .padding(.bottom, 10)
-                Toggle(isOn: $photoIsToggleOn, label: {
+                Toggle(isOn: $viewModel.photoIsToggleOn, label: {
                     RegularText(text: "А тут скоро можно будет сменить фото на мужское (пока так)", color: .white, size: 15)
                 })
                 
                 Spacer()
                 HStack {
                     Spacer()
-                    BarbButtonView(title: "Сохранить", action: {
-                        UserManager.shared.updateCurrentUser(name: myName, age: myAge, experience: myExperience, post: myPost)
-                        print(UserManager.shared.currentUser.name)
+                    BarbButton(title: "Сохранить", action: {
+                        viewModel.saveChanges()
+                        print(viewModel.myName)
                         myDataEditingIsPresented.toggle()
                     }, width: 147, height: 47)
                     Spacer()
@@ -73,6 +59,6 @@ struct MyDataEditingView: View {
     }
 }
 
-#Preview {
-    MyDataEditingView(myName: "", myAge: "", myExperience: "", myPost: "", photoIsToggleOn: true, myDataEditingIsPresented: .constant(true))
-}
+//#Preview {
+//    MyDataEditingView(myName: "", myAge: "", myExperience: "", myPost: "", photoIsToggleOn: true, myDataEditingIsPresented: .constant(true))
+//}

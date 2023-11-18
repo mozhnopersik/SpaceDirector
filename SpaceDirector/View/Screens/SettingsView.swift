@@ -25,7 +25,7 @@ struct SettingsView: View {
                 })
                 .padding(.horizontal, 2)
                 Toggle(isOn:$isDarkThemeOn, label: {
-                    RegularText(text: "И сменить тему на темную", color: .white, size: 15)
+                    RegularText(text: "И сменить тему на темную и обратно", color: .white, size: 15)
                 })
                 .padding(.horizontal, 2)
                 
@@ -48,6 +48,7 @@ struct GrayRoundedRectangle: View {
         }
     }
 }
+
 #Preview {
     SettingsView()
 }

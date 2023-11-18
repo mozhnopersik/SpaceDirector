@@ -33,7 +33,7 @@ struct SignInView: View {
                     .ignoresSafeArea()
                 VStack (alignment: .leading) {
                     RegularText(text: "Введите ваши данные", color: .white, size: 25)
-                    BarbButtonView(title: "Где мне их взять? ", action: {self.isPresentingWhereAlert.toggle()}, width: 147, height: 36)
+                    BarbButton(title: "Где мне их взять? ", action: {self.isPresentingWhereAlert.toggle()}, width: 147, height: 36)
                         .padding(.bottom, 10)
                     RegularText(text: "Логин:", color: .white, size: 15)
                     WhiteTextField(text: $email, placeholder: "")
@@ -55,8 +55,6 @@ struct SignInView: View {
                         }) {
                             RegularText(text: "Забыли пароль?", color: .white, size: 15)
                         }
-                        
-                        
                     }
                     .padding(.bottom, 10)
                     HStack {
@@ -72,8 +70,7 @@ struct SignInView: View {
                 if isPresentingWhereAlert {
                     VStack {
                         Spacer()
-                        WhereIsDataAlertView(isPresentingWhereAlert: $isPresentingWhereAlert, action: {print("")})
-                        
+                        WhereIsDataAlertView(whereIsDataAlertViewModel: WhereIsDataAlertViewModel(isPresentingWhereAlert: $isPresentingWhereAlert))
                         Spacer()
                     }
                     .background(
@@ -90,7 +87,7 @@ struct SignInView: View {
                 if isPresentingLoginAlert {
                     VStack {
                         Spacer()
-                        LoginAlertView(isPresentingLoginAlert: $isPresentingLoginAlert, email: $email, action: {print("")})
+                        ForgotLoginAlertView(forgotLoginAlertViewModel: ForgotLoginAlertViewModel(isPresentingLoginAlert: $isPresentingLoginAlert, email: $email))
                         
                         Spacer()
                     }
@@ -104,10 +101,11 @@ struct SignInView: View {
                             })
                     .transition(.opacity.animation(.easeIn(duration: 0.2)))
                 }
+                
                 if isPresentingPasswordAlert {
                     VStack {
                         Spacer()
-                        PasswordAlertView(isPresentingPasswordAlert: $isPresentingPasswordAlert, password: $password, action: {self.isPresentingPasswordAlert.toggle()})
+                        ForgotPasswordAlertView(forgotPasswordAlertViewModel: ForgotPasswordAlertViewModel(isPresentingPasswordAlert: $isPresentingPasswordAlert, password: $password))
                         
                         Spacer()
                     }
@@ -121,7 +119,6 @@ struct SignInView: View {
                             })
                     .transition(.opacity.animation(.easeIn(duration: 0.2)))
                 }
-                
             }
             .onAppear {
                 withAnimation {
@@ -139,6 +136,7 @@ struct SignInButton: View {
     
     @Binding var password: String
     @Binding var email: String
+    
     let user = UserManager.shared.currentUser
     
     var body: some View {

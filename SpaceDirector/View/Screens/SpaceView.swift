@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Alamofire
 
 struct SpaceView: View {
     @ObservedObject var viewModel: NASAViewModel
@@ -48,9 +47,11 @@ struct SpaceView: View {
 }
 
 struct ImageOfSpace: View {
+    
     @ObservedObject var viewModel: NASAViewModel
+    
     var body: some View {
-        
+
         GeometryReader { geometry in
             if let image = viewModel.image {
                 Image(uiImage: image)
@@ -62,39 +63,6 @@ struct ImageOfSpace: View {
     }
 }
 
-class NASAViewModel: ObservableObject {
-    @Published var title: String = ""
-    @Published var explanation: String = ""
-    @Published var image: UIImage?
-    @Published var copyright: String = ""
-
-    func fetchAPOD() {
-        RequestManager.shared.fetchAPOD { [weak self] result in
-            switch result {
-            case .success(let apodResponse):
-                DispatchQueue.main.async {
-                    self?.title = apodResponse.title
-                    self?.explanation = apodResponse.explanation
-                    self?.copyright = apodResponse.copyright ?? "Copyright not founded"
-                    
-                    if let imageUrl = URL(string: apodResponse.url) {
-                        URLSession.shared.dataTask(with: imageUrl) { data, _, error in
-                            if let data = data, let image = UIImage(data: data) {
-                                DispatchQueue.main.async {
-                                    self?.image = image
-                                }
-                            } else if let error = error {
-                                print("Error loading image: \(error)")
-                            }
-                        }.resume()
-                    }
-                }
-            case .failure(let error):
-                print("Error fetching APOD: \(error)")
-            }
-        }
-    }
-}
 #Preview {
     SpaceView(titleOfPhoto: "", viewModel: NASAViewModel())
 }

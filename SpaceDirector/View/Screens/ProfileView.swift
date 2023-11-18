@@ -38,7 +38,7 @@ struct ProfileView: View {
                 }
                 RegularText(text: "Кстати, ее можно изменить в настройках, для этого нажмите на карандашик сверху", color: .white, size: 15)
                 RegularText(text: "А еще вы можете:", color: .white, size: 15)
-                BarbButtonView(title: "выйти из профиля",
+                BarbButton(title: "выйти из профиля",
                                action: { 
                     print("Кнопка была нажата")
                     isUserAuthenticated = false
@@ -49,7 +49,7 @@ struct ProfileView: View {
                 
             }
             .sheet(isPresented: $myDataEditingIsPresented) {
-                MyDataEditingView(myName: userManager.currentUser.name, myAge: userManager.currentUser.age, myExperience: userManager.currentUser.experience, myPost: userManager.currentUser.post, photoIsToggleOn: userManager.currentUser.photoIsToggleOn, myDataEditingIsPresented: $myDataEditingIsPresented)
+                MyDataEditingView(viewModel: MyDataEditingViewModel(userManager: UserManager()), myDataEditingIsPresented: $myDataEditingIsPresented)
             }
             .padding(.horizontal, 30)
             .padding(.top, 100)
@@ -90,6 +90,7 @@ struct ProfileDataView: View {
         }
     }
 }
+
 struct WhiteRectangle: View {
     var body: some View {
         RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)

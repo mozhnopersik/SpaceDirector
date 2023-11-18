@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct YeyView: View {
+    
     @AppStorage("isUserAuthenticated") private var isUserAuthenticated: Bool?
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -22,7 +24,7 @@ struct YeyView: View {
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 30)
                     NavigationLink(destination: HomeView(viewModel: NASAViewModel())) {
-                        BarbRoudedRectangle(title: "Ну ка", width: 147, height: 47)
+                        BarbRoudedButton(title: "Ну ка", width: 147, height: 47)
                     }
                     .padding(.top)
                 }
