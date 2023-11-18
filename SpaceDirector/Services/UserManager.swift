@@ -12,7 +12,7 @@ class UserManager: ObservableObject {
     static let shared = UserManager()
     
     private let userDefaults = UserDefaults.standard
-    private let userKey = "UserKey"
+    private let userKey = "CuteUser"
     
     @Published var currentUser: UserProfile {
         didSet {
@@ -25,7 +25,13 @@ class UserManager: ObservableObject {
            let decodedUser = try? JSONDecoder().decode(UserProfile.self, from: savedData) {
             self.currentUser = decodedUser
         } else {
-            self.currentUser = UserProfile(name: "", age: "25", experience: "6", post: "Астрофизик", photoIsToggleOn: true, email: "thebest@email.com", password: "12345678")
+            self.currentUser = UserProfile(name: "", 
+                                           age: "25",
+                                           experience: "6",
+                                           post: "Астрофизик",
+                                           photoIsToggleOn: false,
+                                           email: "thebest@email.com",
+                                           password: "12345678")
         }
     }
     

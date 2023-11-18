@@ -7,8 +7,8 @@
 
 struct APODResponse: Decodable {
     let url: String
-    let title: String
-    let explanation: String
+    let title: String?
+    let explanation: String?
     let copyright: String?
     
     enum CodingKeys: String, CodingKey {

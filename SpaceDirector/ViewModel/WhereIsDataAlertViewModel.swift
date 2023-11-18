@@ -8,6 +8,7 @@
 import SwiftUI
 
 class WhereIsDataAlertViewModel: ObservableObject {
+    
     @Published var whereIsDataAlertModel: WhereIsDataAlertModel
     
     @Binding var isPresentingWhereAlert: Bool

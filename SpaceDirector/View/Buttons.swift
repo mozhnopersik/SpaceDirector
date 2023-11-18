@@ -39,7 +39,6 @@ struct BarbRoudedButton: View {
     var height: CGFloat
     
     var body: some View {
-        
         RoundedRectangle(cornerRadius: 27)
             .foregroundColor(Color("Barb"))
             .frame(width: width, height: height)
@@ -48,7 +47,6 @@ struct BarbRoudedButton: View {
                     .font(.custom("TildaSans-Regular", size: 15))
                     .foregroundColor(Color.white)
             )
-        
     }
 }
 

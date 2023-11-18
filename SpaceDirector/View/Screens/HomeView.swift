@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct HomeView: View {
+    
     @ObservedObject var viewModel: NASAViewModel
     @State private var tabSelection = 1
-    
-    @EnvironmentObject private var сontactData: ContactData
 
     var body: some View {
         NavigationStack {
             TabView(selection: $tabSelection) {
-                
                 ProfileView().tag(1)
                 ContactListView().tag(2)
                 SpaceView(titleOfPhoto: "", viewModel: viewModel).tag(3)
@@ -34,5 +32,4 @@ struct HomeView: View {
 
 #Preview {
     HomeView(viewModel: NASAViewModel())
-        .environmentObject(ContactData())
 }

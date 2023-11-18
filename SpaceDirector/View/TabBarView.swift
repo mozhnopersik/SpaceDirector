@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TabBarView: View {
+    
     @Binding var tabSelection: Int
     @Namespace private var animationNamespace
     
@@ -58,7 +59,6 @@ struct TabBarView: View {
         .padding(.horizontal)
     }
 }
-
 
 #Preview {
     TabBarView(tabSelection: .constant(2))

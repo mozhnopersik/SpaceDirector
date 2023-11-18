@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContactListView: View {
     
-    @EnvironmentObject private var contactData: ContactData
+    @EnvironmentObject private var contactData: NewContactViewModel
     @State private var newContactIsPresented = false
     
     var body: some View {
@@ -19,13 +19,20 @@ struct ContactListView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             VStack (alignment: .leading, spacing: 10) {
-                RegularText(text: "Это ваши контакты", color: .white, size: 30)
-                RegularText(text: "Вы можете добавить сюда ваших коллег, или каких-нибудь знаменитостей.", color: .white, size: 15)
+                RegularText(text: "Это ваши контакты", 
+                            color: .white,
+                            size: 30)
+                RegularText(text: "Вы можете добавить сюда ваших коллег, или каких-нибудь знаменитостей.",
+                            color: .white,
+                            size: 15)
                 GeometryReader { geometry in
                     VStack {
                         List {
                             ForEach(contactData.contacts, id: \.self) { contact in
-                                ContactCellView(name: contact.name, surname: contact.surname, width: geometry.size.width - 22, contact: contact)
+                                ContactCellView(name: contact.name, 
+                                                surname: contact.surname,
+                                                width: geometry.size.width - 22,
+                                                contact: contact)
                                     .listRowBackground(Color.clear)
                                     .listRowSeparator(.hidden)
                             }
@@ -33,16 +40,16 @@ struct ContactListView: View {
                         .listStyle(PlainListStyle())
                         .foregroundColor(.clear)
                         Spacer()
-                        BarbButton(title: "Добавить новый контакт", action: {
-                            newContactIsPresented.toggle()
-                            print(newContactIsPresented)
-                        }, width: 240, height: 47)
+                        BarbButton(title: "Добавить новый контакт", 
+                                   action: { newContactIsPresented.toggle() },
+                                   width: 240,
+                                   height: 47)
                         .padding(.bottom, 120)
                         
                     }
                 }
                 .sheet(isPresented: $newContactIsPresented) {
-                    NewContactView(name: "", surname: "", number: "", newContactIsPresented: $newContactIsPresented)
+                    NewContactView(newContactIsPresented: $newContactIsPresented)
                 }
             }
             .padding(.horizontal, 32)
@@ -51,8 +58,7 @@ struct ContactListView: View {
     }
 }
 
-
 #Preview {
     ContactListView()
-        .environmentObject(ContactData())
+        .environmentObject(NewContactViewModel())
 }

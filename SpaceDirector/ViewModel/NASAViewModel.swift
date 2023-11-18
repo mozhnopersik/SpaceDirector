@@ -5,10 +5,10 @@
 //  Created by Вероника Карпова on 18.11.2023.
 //
 
-import Foundation
 import SwiftUI
 
 class NASAViewModel: ObservableObject {
+    
     @Published var title: String = ""
     @Published var explanation: String = ""
     @Published var image: UIImage?
@@ -19,8 +19,8 @@ class NASAViewModel: ObservableObject {
             switch result {
             case .success(let apodResponse):
                 DispatchQueue.main.async {
-                    self?.title = apodResponse.title
-                    self?.explanation = apodResponse.explanation
+                    self?.title = apodResponse.title ?? "Загрузка..."
+                    self?.explanation = apodResponse.explanation ?? "Если вы долго видите эту надпись, скорее всего что-то не так с интернетом или со стороны сайта NASA."
                     self?.copyright = apodResponse.copyright ?? "Copyright not founded"
                     
                     if let imageUrl = URL(string: apodResponse.url) {
@@ -30,13 +30,14 @@ class NASAViewModel: ObservableObject {
                                     self?.image = image
                                 }
                             } else if let error = error {
-                                print("Error loading image: \(error)")
+                                print("Ошибка загрузки изображения: \(error)")
+                                self?.image = UIImage(named: "Placeholder")
                             }
                         }.resume()
                     }
                 }
             case .failure(let error):
-                print("Error fetching APOD: \(error)")
+                print("Ошибка загрузки APOD: \(error)")
             }
         }
     }

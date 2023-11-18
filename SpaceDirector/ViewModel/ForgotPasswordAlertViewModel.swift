@@ -8,7 +8,9 @@
 import SwiftUI
 
 class ForgotPasswordAlertViewModel: ObservableObject {
+    
     @Published var forgotPasswordAlertModel: ForgotPasswordAlertModel
+    @StateObject private var userManager = UserManager.shared
     
     @Binding var isPresentingPasswordAlert: Bool
     @Binding var password: String
@@ -24,7 +26,7 @@ class ForgotPasswordAlertViewModel: ObservableObject {
     }
     
     func insertPassword() {
-        password = "12345678"
+        password = userManager.currentUser.password
         isPresentingPasswordAlert.toggle()
     }
     

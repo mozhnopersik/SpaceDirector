@@ -23,6 +23,9 @@ class MyDataEditingViewModel: ObservableObject {
     }
 
     func saveChanges() {
-        UserManager.shared.updateCurrentUser(name: myName, age: myAge, experience: myExperience, post: myPost)
+        UserManager.shared.updateCurrentUser(name: myName, 
+                                             age: myAge,
+                                             experience: myExperience,
+                                             post: myPost)
     }
 }

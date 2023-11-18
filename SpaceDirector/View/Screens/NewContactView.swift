@@ -8,18 +8,12 @@
 import SwiftUI
 
 struct NewContactView: View {
+    
     @EnvironmentObject private var contactData: NewContactViewModel
-    @State private var name: String
-    @State private var surname: String
-    @State private var number: String
+    @State private var name = ""
+    @State private var surname = ""
+    @State private var number = ""
     @Binding var newContactIsPresented: Bool
-
-    init(name: String, surname: String, number: String, newContactIsPresented: Binding<Bool>) {
-        self._name = State(initialValue: name)
-        self._surname = State(initialValue: surname)
-        self._number = State(initialValue: number)
-        self._newContactIsPresented = newContactIsPresented
-    }
     
     var body: some View {
         ZStack {
@@ -29,35 +23,42 @@ struct NewContactView: View {
                 .ignoresSafeArea()
             VStack (alignment: .leading) {
                 HStack (alignment: .top) {
-                    RegularText(text: "Тут можно добавить новый контакт", color: .white, size: 25)
+                    RegularText(text: "Тут можно добавить новый контакт", 
+                                color: .white,
+                                size: 25)
                         .padding(.bottom, 20)
                         .padding(.trailing, 30)
                     Spacer()
                     Button(action: {
                         newContactIsPresented.toggle()
-                        print("g")
                     }) {
                         RegularText(text: "назад", color: .white, size: 15)
                             .padding(.top, 8)
                     }
                 }
-                
-                RegularText(text: "Имя:", color: .white, size: 15)
+                RegularText(text: "Имя:", 
+                            color: .white, 
+                            size: 15)
                 WhiteTextField(text: $name, placeholder: "")
                     .padding(.bottom, 10)
-                RegularText(text: "Фамилия:", color: .white, size: 15)
+                RegularText(text: "Фамилия:", 
+                            color: .white,
+                            size: 15)
                 WhiteTextField(text: $surname, placeholder: "")
                     .padding(.bottom, 10)
-                RegularText(text: "Номер телефона:", color: .white, size: 15)
+                RegularText(text: "Номер телефона:", 
+                            color: .white,
+                            size: 15)
                 WhiteTextField(text: $number, placeholder: "")
                     .keyboardType(.numberPad)
                     .padding(.bottom, 10)
-                
                 Spacer()
                 HStack {
                     Spacer()
                     BarbButton(title: "Сохранить", action: {
-                        let newContact = NewContactViewModel.Contact(name: name, surname: surname, number: number)
+                        let newContact = NewContactViewModel.Contact(name: name, 
+                                                                     surname: surname,
+                                                                     number: number)
                         contactData.contacts.append(newContact)
 
                         newContactIsPresented.toggle()
@@ -68,7 +69,6 @@ struct NewContactView: View {
             }
             .padding(.horizontal, 35)
             .padding(.top, 100)
-            
         }
         .onTapGesture {
             UIApplication.shared.endEditing()
@@ -78,11 +78,13 @@ struct NewContactView: View {
 
 extension UIApplication {
     func endEditing() {
-        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        sendAction(#selector(UIResponder.resignFirstResponder), 
+                   to: nil,
+                   from: nil,
+                   for: nil)
     }
 }
 
-//#Preview {
-//    NewContactView(name: "", surname: "", number: "", newContactIsPresented: .constant(true))
-//        .environmentObject(ContactData())
-//}
+#Preview {
+    NewContactView(newContactIsPresented: .constant(true))
+}

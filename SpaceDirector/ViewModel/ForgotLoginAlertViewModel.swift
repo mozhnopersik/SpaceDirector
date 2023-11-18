@@ -8,7 +8,9 @@
 import SwiftUI
 
 class ForgotLoginAlertViewModel: ObservableObject {
+    
     @Published var forgotLoginAlertModel: ForgotLoginAlertModel
+    @StateObject private var userManager = UserManager.shared
     
     @Binding var isPresentingLoginAlert: Bool
     @Binding var email: String
@@ -24,7 +26,7 @@ class ForgotLoginAlertViewModel: ObservableObject {
     }
     
     func insertEmail() {
-        email = "thebest@email.com"
+        email = userManager.currentUser.email
         isPresentingLoginAlert.toggle()
     }
     

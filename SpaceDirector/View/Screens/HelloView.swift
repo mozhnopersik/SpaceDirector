@@ -8,52 +8,63 @@
 import SwiftUI
 
 struct HelloView: View {
-    @State private var showText1 = false
-    @State private var showText2 = false
-    @State private var showText3 = false
-    @State private var showText4 = false
-    @State private var showText5 = false
-    @State private var showText6 = false
+    
+    @State private var showHelloText = false
+    @State private var showMyNameText = false
+    @State private var showDescriptionText = false
+    @State private var showImaginationText = false
+    @State private var showAboutText = false
+    @State private var showOkOkText = false
     
     @State private var signInIsPresented = false
     
     var body: some View {
         NavigationStack {
             ZStack {
-                if showText1 || showText2 || showText3 {
+                if showHelloText || showMyNameText || showDescriptionText {
                     Image("Background")
                         .resizable()
                         .scaledToFill()
                         .ignoresSafeArea()
-                    
-                    
-                    if showText1 {
+
+                    if showHelloText {
                         ZStack {
-                            RegularText(text: "Привет", color: .white, size: 30)
+                            RegularText(text: "Привет", 
+                                        color: .white,
+                                        size: 30)
                                 .transition(.opacity.animation(.easeIn(duration: 1.0)))
-                            RegularText(text: "tap  here :)", color: .white, size: 15)
+                            RegularText(text: "tap  here :)", 
+                                        color: .white,
+                                        size: 15)
                                 .padding(.top, 300)
                                 .transition(.opacity.animation(.easeIn(duration: 1.0)))
                         }
                     }
                     
-                    if showText2 {
-                        RegularText(text: "Меня зовут Рони", color: .white, size: 30)
+                    if showMyNameText {
+                        RegularText(text: "Меня зовут Рони", 
+                                    color: .white,
+                                    size: 30)
                             .transition(.opacity.animation(.easeIn(duration: 1.0)))
                     }
                     
-                    if showText3 {
-                        RegularText(text: "И сейчас я постараюсь продемонстрировать вам часть технологий, которыми я владею", color: .white, size: 30)
+                    if showDescriptionText {
+                        RegularText(text: "И сейчас я постараюсь продемонстрировать вам часть технологий, которыми я владею", 
+                                    color: .white,
+                                    size: 30)
                             .padding()
                             .transition(.opacity.animation(.easeIn(duration: 1.0)))
                             .multilineTextAlignment(.center)
                         
-                        BarbButton(title: "Давай", action: {
-                            showText4 = true
-                            showText3 = false
-                        }, width: 132, height: 47)
+                        BarbButton(title: "Давай", 
+                                   action: {
+                            showImaginationText = true
+                            showDescriptionText = false
+                        }, 
+                                   width: 132,
+                                   height: 47)
                         .padding(.top, 400)
-                        .transition(.opacity.animation(.easeIn(duration: 1.0).delay(1.5)))
+                        .transition(.opacity.animation(.easeIn(duration: 1.0).delay(1.0)))
                     }
                     
                 } else {
@@ -63,28 +74,73 @@ struct HelloView: View {
                             .scaledToFill()
                             .ignoresSafeArea()
                         VStack (alignment: .leading, spacing: 25) {
-                            if showText4 {
-                                RegularText(text: "Предлагаю представить, что вы студент-астрофизик из NASA", color: .white, size: 25)
-                                    .transition(.opacity.animation(.easeIn(duration: 1.0)))
-                                BarbButton(title: "Ну допустим", action: { showText5 = true }, width: 168, height: 47)
-                                    .transition(.opacity.animation(.easeIn(duration: 1.0).delay(1.5)))
+                            if showImaginationText {
+                                RegularText(text: "Предлагаю представить, что вы студент-астрофизик из NASA", 
+                                            color: .white,
+                                            size: 25)
+                                    .transition(
+                                        .opacity
+                                            .animation(
+                                                .easeIn(duration: 1.0)
+                                            )
+                                    )
+                                BarbButton(title: "Ну допустим",
+                                           action: { showAboutText = true },
+                                           width: 168,
+                                           height: 47)
+                                    .transition(
+                                        .opacity
+                                            .animation(
+                                                .easeIn(duration: 1.0)
+                                                .delay(0.5)
+                                            )
+                                    )
                             }
-                            if showText5 {
-                                RegularText(text: "И это ваш личный кабинет в приложении агенства", color: .white, size: 25)
-                                    .transition(.opacity.animation(.easeIn(duration: 1.0)))
+                            if showAboutText {
+                                RegularText(text: "И это ваш личный кабинет в приложении агенства", 
+                                            color: .white,
+                                            size: 25)
+                                    .transition(
+                                        .opacity
+                                            .animation(
+                                                .easeIn(duration: 1.0)
+                                            )
+                                    )
                                 
-                                BarbButton(title: "Так, и что теперь?", action: { showText6 = true }, width: 204, height: 47)
-                                    .transition(.opacity.animation(.easeIn(duration: 1.0).delay(1.5)))
+                                BarbButton(title: "Так, и что теперь?", 
+                                           action: { showOkOkText = true },
+                                           width: 204,
+                                           height: 47)
+                                    .transition(
+                                        .opacity
+                                            .animation(
+                                                .easeIn(duration: 1.0)
+                                                .delay(0.5)
+                                            )
+                                    )
                             }
-                            if showText6 {
-                                RegularText(text: "Все-все, не томлю, заходите :)", color: .white, size: 25)
+                            if showOkOkText {
+                                RegularText(text: "Все-все, не томлю, заходите :)", 
+                                            color: .white,
+                                            size: 25)
                                     .padding(.trailing)
-                                    .transition(.opacity.animation(.easeIn(duration: 1.0)))
-                                BarbButton(title: "Войти в личный кабинет", action: {
-                                    print("Кнопка сработала")
-                                    print(signInIsPresented)
-                                    signInIsPresented.toggle() }, width: 247, height: 47)
-                                .transition(.opacity.animation(.easeIn(duration: 1.0).delay(1.5)))
+                                    .transition(
+                                        .opacity
+                                            .animation(
+                                                .easeIn(duration: 1.0)
+                                            )
+                                    )
+                                BarbButton(title: "Войти в личный кабинет",
+                                           action: { signInIsPresented.toggle() },
+                                           width: 247,
+                                           height: 47)
+                                .transition(
+                                    .opacity
+                                    .animation(
+                                        .easeIn(duration: 1.0)
+                                        .delay(0.5)
+                                    )
+                                )
                             }
                             Spacer()
                         }
@@ -94,30 +150,29 @@ struct HelloView: View {
                 }
             }
             .fullScreenCover(isPresented: $signInIsPresented) {
-                SignInView(email: "", password: "", signInIsPresented: $signInIsPresented)
+                SignInView(signInIsPresented: $signInIsPresented)
             }
             .onAppear {
                 withAnimation {
-                    showText1 = true
+                    showHelloText = true
                 }
             }
             .onTapGesture {
-                if showText1 {
-                    showText1 = false
-                    showText2 = true
-                } else if showText2 {
-                    showText2 = false
-                    showText3 = true
-                } else if showText4 || showText5 || showText6 {
-                    showText1 = false
-                    showText2 = false
-                    showText3 = false
+                if showHelloText {
+                    showHelloText = false
+                    showMyNameText = true
+                } else if showMyNameText {
+                    showMyNameText = false
+                    showDescriptionText = true
+                } else if showImaginationText || showAboutText || showOkOkText {
+                    showHelloText = false
+                    showMyNameText = false
+                    showDescriptionText = false
                 }
             }
         }
     }
 }
-
 
 #Preview {
     HelloView()

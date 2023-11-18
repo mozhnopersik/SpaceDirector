@@ -11,6 +11,7 @@ struct RegularText: View {
     var text: String
     var color: Color
     var size: CGFloat
+    
     var body: some View {
         Text(text)
             .font(.custom("TildaSans-Regular", size: size))

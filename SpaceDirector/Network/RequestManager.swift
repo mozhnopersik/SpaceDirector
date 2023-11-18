@@ -8,6 +8,7 @@
 import Alamofire
 
 class RequestManager {
+    
     static let shared = RequestManager()
     
     private init() {}
