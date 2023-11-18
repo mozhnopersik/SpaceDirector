@@ -46,7 +46,6 @@ struct ProfileView: View {
                                width: 170,
                                height: 47)
                 Spacer()
-                
             }
             .sheet(isPresented: $myDataEditingIsPresented) {
                 MyDataEditingView(viewModel: MyDataEditingViewModel(userManager: UserManager()), myDataEditingIsPresented: $myDataEditingIsPresented)

@@ -32,7 +32,7 @@ struct ContactView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    BarbButtonView(title: "Удалить контакт", action: {
+                    BarbButton(title: "Удалить контакт", action: {
                         removeContact()
                         dismiss()
                     }, width: 147, height: 47)

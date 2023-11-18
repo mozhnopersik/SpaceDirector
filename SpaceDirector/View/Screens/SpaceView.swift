@@ -33,12 +33,10 @@ struct SpaceView: View {
                     RegularText(text: viewModel.explanation, color: .white, size: 15)
                         .padding(.top, 320)
                         .padding(.bottom, 160)
-                    
                 }
             }
             .padding(.horizontal, 32)
             .padding(.top, 100)
-            
         }
         .onAppear {
             viewModel.fetchAPOD()
@@ -51,7 +49,6 @@ struct ImageOfSpace: View {
     @ObservedObject var viewModel: NASAViewModel
     
     var body: some View {
-
         GeometryReader { geometry in
             if let image = viewModel.image {
                 Image(uiImage: image)

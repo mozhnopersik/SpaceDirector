@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @ObservedObject var viewModelOfNASA: NASAViewModel
+    @ObservedObject var viewModel: NASAViewModel
     @State private var tabSelection = 1
     
     @EnvironmentObject private var сontactData: ContactData
@@ -19,7 +19,7 @@ struct HomeView: View {
                 
                 ProfileView().tag(1)
                 ContactListView().tag(2)
-                SpaceView(titleOfPhoto: "", viewModel: viewModelOfNASA).tag(3)
+                SpaceView(titleOfPhoto: "", viewModel: viewModel).tag(3)
                 SettingsView().tag(4)
             }
             .overlay(alignment: .bottom) {
@@ -27,12 +27,12 @@ struct HomeView: View {
             }
         }
         .onAppear {
-            viewModelOfNASA.fetchAPOD()
+            viewModel.fetchAPOD()
         }
     }
 }
 
 #Preview {
-    HomeView(viewModelOfNASA: NASAViewModel())
+    HomeView(viewModel: NASAViewModel())
         .environmentObject(ContactData())
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContactCellView: View {
     @EnvironmentObject private var contactData: ContactData
+    
     var name: String
     var surname: String
     var width: CGFloat
@@ -16,17 +17,17 @@ struct ContactCellView: View {
     
     var body: some View {
         NavigationLink(destination: ContactView(contact: contact)) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 25.0)
-                        .foregroundColor(.white)
-                        .frame(width: width, height: 53)
-                        .padding(0)
-                    HStack {
-                        RegularText(text: "\(name) \(surname)", color: Color("Barb"), size: 15)
-                            .padding(.leading, 35)
-                        Spacer()
-                    }
+            ZStack {
+                RoundedRectangle(cornerRadius: 25.0)
+                    .foregroundColor(.white)
+                    .frame(width: width, height: 53)
+                    .padding(0)
+                HStack {
+                    RegularText(text: "\(name) \(surname)", color: Color("Barb"), size: 15)
+                        .padding(.leading, 35)
+                    Spacer()
                 }
+            }
         }
     }
 }

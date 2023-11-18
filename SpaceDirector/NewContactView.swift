@@ -56,7 +56,7 @@ struct NewContactView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    BarbButtonView(title: "Сохранить", action: {
+                    BarbButton(title: "Сохранить", action: {
                         let newContact = ContactData.Contact(name: name, surname: surname, number: number)
                         contactData.contacts.append(newContact)
 
@@ -73,7 +73,6 @@ struct NewContactView: View {
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
-        
     }
 }
 
@@ -115,7 +114,7 @@ class ContactData: ObservableObject {
     }
 }
 
-#Preview {
-    NewContactView(name: "", surname: "", number: "", newContactIsPresented: .constant(true))
-        .environmentObject(ContactData())
-}
+//#Preview {
+//    NewContactView(name: "", surname: "", number: "", newContactIsPresented: .constant(true))
+//        .environmentObject(ContactData())
+//}

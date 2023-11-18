@@ -48,7 +48,7 @@ struct HelloView: View {
                             .transition(.opacity.animation(.easeIn(duration: 1.0)))
                             .multilineTextAlignment(.center)
                         
-                        BarbButtonView(title: "Давай", action: {
+                        BarbButton(title: "Давай", action: {
                             showText4 = true
                             showText3 = false
                         }, width: 132, height: 47)
@@ -66,21 +66,21 @@ struct HelloView: View {
                             if showText4 {
                                 RegularText(text: "Предлагаю представить, что вы студент-астрофизик из NASA", color: .white, size: 25)
                                     .transition(.opacity.animation(.easeIn(duration: 1.0)))
-                                BarbButtonView(title: "Ну допустим", action: { showText5 = true }, width: 168, height: 47)
+                                BarbButton(title: "Ну допустим", action: { showText5 = true }, width: 168, height: 47)
                                     .transition(.opacity.animation(.easeIn(duration: 1.0).delay(1.5)))
                             }
                             if showText5 {
                                 RegularText(text: "И это ваш личный кабинет в приложении агенства", color: .white, size: 25)
                                     .transition(.opacity.animation(.easeIn(duration: 1.0)))
                                 
-                                BarbButtonView(title: "Так, и что теперь?", action: { showText6 = true }, width: 204, height: 47)
+                                BarbButton(title: "Так, и что теперь?", action: { showText6 = true }, width: 204, height: 47)
                                     .transition(.opacity.animation(.easeIn(duration: 1.0).delay(1.5)))
                             }
                             if showText6 {
                                 RegularText(text: "Все-все, не томлю, заходите :)", color: .white, size: 25)
                                     .padding(.trailing)
                                     .transition(.opacity.animation(.easeIn(duration: 1.0)))
-                                BarbButtonView(title: "Войти в личный кабинет", action: {
+                                BarbButton(title: "Войти в личный кабинет", action: {
                                     print("Кнопка сработала")
                                     print(signInIsPresented)
                                     signInIsPresented.toggle() }, width: 247, height: 47)
