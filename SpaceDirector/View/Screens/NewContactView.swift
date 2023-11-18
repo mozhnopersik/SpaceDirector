@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewContactView: View {
-    @EnvironmentObject private var contactData: ContactData
+    @EnvironmentObject private var contactData: NewContactViewModel
     @State private var name: String
     @State private var surname: String
     @State private var number: String
@@ -57,7 +57,7 @@ struct NewContactView: View {
                 HStack {
                     Spacer()
                     BarbButton(title: "Сохранить", action: {
-                        let newContact = ContactData.Contact(name: name, surname: surname, number: number)
+                        let newContact = NewContactViewModel.Contact(name: name, surname: surname, number: number)
                         contactData.contacts.append(newContact)
 
                         newContactIsPresented.toggle()
@@ -79,38 +79,6 @@ struct NewContactView: View {
 extension UIApplication {
     func endEditing() {
         sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-
-class ContactData: ObservableObject {
-    @Published var contacts: [Contact] = [] {
-        didSet {
-            saveContacts()
-        }
-        
-    }
-    
-    struct Contact: Hashable, Codable {
-        var name: String
-        var surname: String
-        var number: String
-    }
-    
-    init() {
-        loadContacts()
-    }
-    
-    private func saveContacts() {
-        if let encodedData = try? JSONEncoder().encode(contacts) {
-            UserDefaults.standard.set(encodedData, forKey: "contactsKey")
-        }
-    }
-    
-    private func loadContacts() {
-        if let savedData = UserDefaults.standard.data(forKey: "contactsKey"),
-           let decodedContacts = try? JSONDecoder().decode([Contact].self, from: savedData) {
-            contacts = decodedContacts
-        }
     }
 }
 

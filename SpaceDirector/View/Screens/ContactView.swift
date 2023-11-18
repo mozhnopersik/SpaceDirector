@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ContactView: View {
-    @EnvironmentObject private var contactData: ContactData
-    var contact: ContactData.Contact
+    @EnvironmentObject private var contactData: NewContactViewModel
+    var contact: NewContactViewModel.Contact
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -53,7 +53,7 @@ struct ContactView: View {
     }
 }
 
-#Preview {
-    ContactView(contact: ContactData.Contact(name: "John", surname: "Karter", number: "89610568807"))
-        .environmentObject(ContactData())
-}
+//#Preview {
+//    ContactView(contact: NewContactViewModel.Contact(name: "John", surname: "Karter", number: "89610568807"))
+//        .environmentObject(NewContactViewModel())
+//}
